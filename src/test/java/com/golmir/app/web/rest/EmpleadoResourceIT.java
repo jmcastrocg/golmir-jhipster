@@ -45,6 +45,9 @@ public class EmpleadoResourceIT {
     private static final String DEFAULT_NUMERO_TELEFONO = "AAAAAAAAAA";
     private static final String UPDATED_NUMERO_TELEFONO = "BBBBBBBBBB";
 
+    private static final String DEFAULT_TITULO = "AAAAAAAAAA";
+    private static final String UPDATED_TITULO = "BBBBBBBBBB";
+
     private static final Instant DEFAULT_FECHA_CONTRATACION = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_FECHA_CONTRATACION = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
@@ -74,6 +77,7 @@ public class EmpleadoResourceIT {
             .apellido(DEFAULT_APELLIDO)
             .email(DEFAULT_EMAIL)
             .numeroTelefono(DEFAULT_NUMERO_TELEFONO)
+            .titulo(DEFAULT_TITULO)
             .fechaContratacion(DEFAULT_FECHA_CONTRATACION);
         return empleado;
     }
@@ -89,6 +93,7 @@ public class EmpleadoResourceIT {
             .apellido(UPDATED_APELLIDO)
             .email(UPDATED_EMAIL)
             .numeroTelefono(UPDATED_NUMERO_TELEFONO)
+            .titulo(UPDATED_TITULO)
             .fechaContratacion(UPDATED_FECHA_CONTRATACION);
         return empleado;
     }
@@ -117,6 +122,7 @@ public class EmpleadoResourceIT {
         assertThat(testEmpleado.getApellido()).isEqualTo(DEFAULT_APELLIDO);
         assertThat(testEmpleado.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(testEmpleado.getNumeroTelefono()).isEqualTo(DEFAULT_NUMERO_TELEFONO);
+        assertThat(testEmpleado.getTitulo()).isEqualTo(DEFAULT_TITULO);
         assertThat(testEmpleado.getFechaContratacion()).isEqualTo(DEFAULT_FECHA_CONTRATACION);
     }
 
@@ -155,6 +161,7 @@ public class EmpleadoResourceIT {
             .andExpect(jsonPath("$.[*].apellido").value(hasItem(DEFAULT_APELLIDO)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
             .andExpect(jsonPath("$.[*].numeroTelefono").value(hasItem(DEFAULT_NUMERO_TELEFONO)))
+            .andExpect(jsonPath("$.[*].titulo").value(hasItem(DEFAULT_TITULO)))
             .andExpect(jsonPath("$.[*].fechaContratacion").value(hasItem(DEFAULT_FECHA_CONTRATACION.toString())));
     }
     
@@ -173,6 +180,7 @@ public class EmpleadoResourceIT {
             .andExpect(jsonPath("$.apellido").value(DEFAULT_APELLIDO))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
             .andExpect(jsonPath("$.numeroTelefono").value(DEFAULT_NUMERO_TELEFONO))
+            .andExpect(jsonPath("$.titulo").value(DEFAULT_TITULO))
             .andExpect(jsonPath("$.fechaContratacion").value(DEFAULT_FECHA_CONTRATACION.toString()));
     }
 
@@ -201,6 +209,7 @@ public class EmpleadoResourceIT {
             .apellido(UPDATED_APELLIDO)
             .email(UPDATED_EMAIL)
             .numeroTelefono(UPDATED_NUMERO_TELEFONO)
+            .titulo(UPDATED_TITULO)
             .fechaContratacion(UPDATED_FECHA_CONTRATACION);
 
         restEmpleadoMockMvc.perform(put("/api/empleados")
@@ -216,6 +225,7 @@ public class EmpleadoResourceIT {
         assertThat(testEmpleado.getApellido()).isEqualTo(UPDATED_APELLIDO);
         assertThat(testEmpleado.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testEmpleado.getNumeroTelefono()).isEqualTo(UPDATED_NUMERO_TELEFONO);
+        assertThat(testEmpleado.getTitulo()).isEqualTo(UPDATED_TITULO);
         assertThat(testEmpleado.getFechaContratacion()).isEqualTo(UPDATED_FECHA_CONTRATACION);
     }
 

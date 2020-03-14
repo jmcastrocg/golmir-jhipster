@@ -27,6 +27,7 @@ export class EmpleadoUpdateComponent implements OnInit {
     apellido: [],
     email: [],
     numeroTelefono: [],
+    titulo: [],
     fechaContratacion: [],
     direccion: []
   });
@@ -78,6 +79,7 @@ export class EmpleadoUpdateComponent implements OnInit {
       apellido: empleado.apellido,
       email: empleado.email,
       numeroTelefono: empleado.numeroTelefono,
+      titulo: empleado.titulo,
       fechaContratacion: empleado.fechaContratacion ? empleado.fechaContratacion.format(DATE_TIME_FORMAT) : null,
       direccion: empleado.direccion
     });
@@ -105,6 +107,7 @@ export class EmpleadoUpdateComponent implements OnInit {
       apellido: this.editForm.get(['apellido'])!.value,
       email: this.editForm.get(['email'])!.value,
       numeroTelefono: this.editForm.get(['numeroTelefono'])!.value,
+      titulo: this.editForm.get(['titulo'])!.value,
       fechaContratacion: this.editForm.get(['fechaContratacion'])!.value
         ? moment(this.editForm.get(['fechaContratacion'])!.value, DATE_TIME_FORMAT)
         : undefined,

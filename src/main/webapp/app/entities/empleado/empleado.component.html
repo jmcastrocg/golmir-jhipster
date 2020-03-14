@@ -27,6 +27,7 @@
                     <th scope="col"  jhiSortBy="apellido"><span jhiTranslate="golmirjhApp.empleado.apellido">Apellido</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="email"><span jhiTranslate="golmirjhApp.empleado.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="numeroTelefono"><span jhiTranslate="golmirjhApp.empleado.numeroTelefono">Numero Telefono</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="titulo"><span jhiTranslate="golmirjhApp.empleado.titulo">Titulo</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="fechaContratacion"><span jhiTranslate="golmirjhApp.empleado.fechaContratacion">Fecha Contratacion</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="direccion.id"><span jhiTranslate="golmirjhApp.empleado.direccion">Direccion</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
@@ -39,6 +40,7 @@
                     <td>{{ empleado.apellido }}</td>
                     <td>{{ empleado.email }}</td>
                     <td>{{ empleado.numeroTelefono }}</td>
+                    <td>{{ empleado.titulo }}</td>
                     <td>{{ empleado.fechaContratacion | date:'medium' }}</td>
                     <td>
                         <div *ngIf="empleado.direccion">

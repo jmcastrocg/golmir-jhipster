@@ -7,6 +7,7 @@ export interface IEmpleado {
   apellido?: string;
   email?: string;
   numeroTelefono?: string;
+  titulo?: string;
   fechaContratacion?: Moment;
   direccion?: IDireccion;
 }
@@ -18,6 +19,7 @@ export class Empleado implements IEmpleado {
     public apellido?: string,
     public email?: string,
     public numeroTelefono?: string,
+    public titulo?: string,
     public fechaContratacion?: Moment,
     public direccion?: IDireccion
   ) {}

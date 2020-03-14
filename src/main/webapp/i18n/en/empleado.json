@@ -20,6 +20,7 @@
       "apellido": "Apellido",
       "email": "Email",
       "numeroTelefono": "Numero Telefono",
+      "titulo": "Titulo",
       "fechaContratacion": "Fecha Contratacion",
       "direccion": "Direccion"
     }
