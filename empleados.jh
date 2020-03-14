@@ -18,6 +18,7 @@ entity Empleado {
 	numeroTelefono String,
     titulo String,
 	fechaContratacion Instant,
+    foto ImageBlob required
 }
 
 relationship OneToOne {

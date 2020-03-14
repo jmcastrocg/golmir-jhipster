@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
@@ -7,9 +7,11 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 import { IEmpleado, Empleado } from 'app/shared/model/empleado.model';
 import { EmpleadoService } from './empleado.service';
+import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IDireccion } from 'app/shared/model/direccion.model';
 import { DireccionService } from 'app/entities/direccion/direccion.service';
 
@@ -29,12 +31,17 @@ export class EmpleadoUpdateComponent implements OnInit {
     numeroTelefono: [],
     titulo: [],
     fechaContratacion: [],
+    foto: [null, [Validators.required]],
+    fotoContentType: [],
     direccion: []
   });
 
   constructor(
+    protected dataUtils: JhiDataUtils,
+    protected eventManager: JhiEventManager,
     protected empleadoService: EmpleadoService,
     protected direccionService: DireccionService,
+    protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -81,8 +88,36 @@ export class EmpleadoUpdateComponent implements OnInit {
       numeroTelefono: empleado.numeroTelefono,
       titulo: empleado.titulo,
       fechaContratacion: empleado.fechaContratacion ? empleado.fechaContratacion.format(DATE_TIME_FORMAT) : null,
+      foto: empleado.foto,
+      fotoContentType: empleado.fotoContentType,
       direccion: empleado.direccion
     });
+  }
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(contentType: string, base64String: string): void {
+    this.dataUtils.openFile(contentType, base64String);
+  }
+
+  setFileData(event: Event, field: string, isImage: boolean): void {
+    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe(null, (err: JhiFileLoadError) => {
+      this.eventManager.broadcast(
+        new JhiEventWithContent<AlertError>('golmirjhApp.error', { ...err, key: 'error.file.' + err.key })
+      );
+    });
+  }
+
+  clearInputImage(field: string, fieldContentType: string, idInput: string): void {
+    this.editForm.patchValue({
+      [field]: null,
+      [fieldContentType]: null
+    });
+    if (this.elementRef && idInput && this.elementRef.nativeElement.querySelector('#' + idInput)) {
+      this.elementRef.nativeElement.querySelector('#' + idInput).value = null;
+    }
   }
 
   previousState(): void {
@@ -111,6 +146,8 @@ export class EmpleadoUpdateComponent implements OnInit {
       fechaContratacion: this.editForm.get(['fechaContratacion'])!.value
         ? moment(this.editForm.get(['fechaContratacion'])!.value, DATE_TIME_FORMAT)
         : undefined,
+      fotoContentType: this.editForm.get(['fotoContentType'])!.value,
+      foto: this.editForm.get(['foto'])!.value,
       direccion: this.editForm.get(['direccion'])!.value
     };
   }

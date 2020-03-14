@@ -2,6 +2,7 @@ package com.golmir.app.domain;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -38,6 +39,14 @@ public class Empleado implements Serializable {
 
     @Column(name = "fecha_contratacion")
     private Instant fechaContratacion;
+
+    
+    @Lob
+    @Column(name = "foto", nullable = false)
+    private byte[] foto;
+
+    @Column(name = "foto_content_type", nullable = false)
+    private String fotoContentType;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -130,6 +139,32 @@ public class Empleado implements Serializable {
         this.fechaContratacion = fechaContratacion;
     }
 
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public Empleado foto(byte[] foto) {
+        this.foto = foto;
+        return this;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
+    public String getFotoContentType() {
+        return fotoContentType;
+    }
+
+    public Empleado fotoContentType(String fotoContentType) {
+        this.fotoContentType = fotoContentType;
+        return this;
+    }
+
+    public void setFotoContentType(String fotoContentType) {
+        this.fotoContentType = fotoContentType;
+    }
+
     public Direccion getDireccion() {
         return direccion;
     }
@@ -170,6 +205,8 @@ public class Empleado implements Serializable {
             ", numeroTelefono='" + getNumeroTelefono() + "'" +
             ", titulo='" + getTitulo() + "'" +
             ", fechaContratacion='" + getFechaContratacion() + "'" +
+            ", foto='" + getFoto() + "'" +
+            ", fotoContentType='" + getFotoContentType() + "'" +
             "}";
     }
 }

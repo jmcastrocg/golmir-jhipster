@@ -29,6 +29,7 @@
                     <th scope="col"  jhiSortBy="numeroTelefono"><span jhiTranslate="golmirjhApp.empleado.numeroTelefono">Numero Telefono</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="titulo"><span jhiTranslate="golmirjhApp.empleado.titulo">Titulo</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="fechaContratacion"><span jhiTranslate="golmirjhApp.empleado.fechaContratacion">Fecha Contratacion</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="foto"><span jhiTranslate="golmirjhApp.empleado.foto">Foto</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="direccion.id"><span jhiTranslate="golmirjhApp.empleado.direccion">Direccion</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
@@ -42,6 +43,12 @@
                     <td>{{ empleado.numeroTelefono }}</td>
                     <td>{{ empleado.titulo }}</td>
                     <td>{{ empleado.fechaContratacion | date:'medium' }}</td>
+                    <td>
+                        <a *ngIf="empleado.foto" (click)="openFile(empleado.fotoContentType, empleado.foto)">
+                            <img [src]="'data:' + empleado.fotoContentType + ';base64,' + empleado.foto" style="max-height: 30px;" alt="empleado image"/>
+                        </a>
+                        <span *ngIf="empleado.foto">{{ empleado.fotoContentType }}, {{ byteSize(empleado.foto) }}</span>
+                    </td>
                     <td>
                         <div *ngIf="empleado.direccion">
                             <a [routerLink]="['/direccion', empleado.direccion?.id, 'view']" >{{ empleado.direccion?.id }}</a>

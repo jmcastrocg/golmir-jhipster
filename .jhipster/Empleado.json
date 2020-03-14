@@ -24,6 +24,14 @@
         {
             "fieldName": "fechaContratacion",
             "fieldType": "Instant"
+        },
+        {
+            "fieldName": "foto",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "relationships": [
