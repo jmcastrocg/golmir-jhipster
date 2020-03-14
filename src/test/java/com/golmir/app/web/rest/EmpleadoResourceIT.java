@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -51,6 +52,11 @@ public class EmpleadoResourceIT {
     private static final Instant DEFAULT_FECHA_CONTRATACION = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_FECHA_CONTRATACION = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final byte[] DEFAULT_FOTO = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_FOTO = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_FOTO_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_FOTO_CONTENT_TYPE = "image/png";
+
     @Autowired
     private EmpleadoRepository empleadoRepository;
 
@@ -78,7 +84,9 @@ public class EmpleadoResourceIT {
             .email(DEFAULT_EMAIL)
             .numeroTelefono(DEFAULT_NUMERO_TELEFONO)
             .titulo(DEFAULT_TITULO)
-            .fechaContratacion(DEFAULT_FECHA_CONTRATACION);
+            .fechaContratacion(DEFAULT_FECHA_CONTRATACION)
+            .foto(DEFAULT_FOTO)
+            .fotoContentType(DEFAULT_FOTO_CONTENT_TYPE);
         return empleado;
     }
     /**
@@ -94,7 +102,9 @@ public class EmpleadoResourceIT {
             .email(UPDATED_EMAIL)
             .numeroTelefono(UPDATED_NUMERO_TELEFONO)
             .titulo(UPDATED_TITULO)
-            .fechaContratacion(UPDATED_FECHA_CONTRATACION);
+            .fechaContratacion(UPDATED_FECHA_CONTRATACION)
+            .foto(UPDATED_FOTO)
+            .fotoContentType(UPDATED_FOTO_CONTENT_TYPE);
         return empleado;
     }
 
@@ -124,6 +134,8 @@ public class EmpleadoResourceIT {
         assertThat(testEmpleado.getNumeroTelefono()).isEqualTo(DEFAULT_NUMERO_TELEFONO);
         assertThat(testEmpleado.getTitulo()).isEqualTo(DEFAULT_TITULO);
         assertThat(testEmpleado.getFechaContratacion()).isEqualTo(DEFAULT_FECHA_CONTRATACION);
+        assertThat(testEmpleado.getFoto()).isEqualTo(DEFAULT_FOTO);
+        assertThat(testEmpleado.getFotoContentType()).isEqualTo(DEFAULT_FOTO_CONTENT_TYPE);
     }
 
     @Test
@@ -162,7 +174,9 @@ public class EmpleadoResourceIT {
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
             .andExpect(jsonPath("$.[*].numeroTelefono").value(hasItem(DEFAULT_NUMERO_TELEFONO)))
             .andExpect(jsonPath("$.[*].titulo").value(hasItem(DEFAULT_TITULO)))
-            .andExpect(jsonPath("$.[*].fechaContratacion").value(hasItem(DEFAULT_FECHA_CONTRATACION.toString())));
+            .andExpect(jsonPath("$.[*].fechaContratacion").value(hasItem(DEFAULT_FECHA_CONTRATACION.toString())))
+            .andExpect(jsonPath("$.[*].fotoContentType").value(hasItem(DEFAULT_FOTO_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].foto").value(hasItem(Base64Utils.encodeToString(DEFAULT_FOTO))));
     }
     
     @Test
@@ -181,7 +195,9 @@ public class EmpleadoResourceIT {
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
             .andExpect(jsonPath("$.numeroTelefono").value(DEFAULT_NUMERO_TELEFONO))
             .andExpect(jsonPath("$.titulo").value(DEFAULT_TITULO))
-            .andExpect(jsonPath("$.fechaContratacion").value(DEFAULT_FECHA_CONTRATACION.toString()));
+            .andExpect(jsonPath("$.fechaContratacion").value(DEFAULT_FECHA_CONTRATACION.toString()))
+            .andExpect(jsonPath("$.fotoContentType").value(DEFAULT_FOTO_CONTENT_TYPE))
+            .andExpect(jsonPath("$.foto").value(Base64Utils.encodeToString(DEFAULT_FOTO)));
     }
 
     @Test
@@ -210,7 +226,9 @@ public class EmpleadoResourceIT {
             .email(UPDATED_EMAIL)
             .numeroTelefono(UPDATED_NUMERO_TELEFONO)
             .titulo(UPDATED_TITULO)
-            .fechaContratacion(UPDATED_FECHA_CONTRATACION);
+            .fechaContratacion(UPDATED_FECHA_CONTRATACION)
+            .foto(UPDATED_FOTO)
+            .fotoContentType(UPDATED_FOTO_CONTENT_TYPE);
 
         restEmpleadoMockMvc.perform(put("/api/empleados")
             .contentType(MediaType.APPLICATION_JSON)
@@ -227,6 +245,8 @@ public class EmpleadoResourceIT {
         assertThat(testEmpleado.getNumeroTelefono()).isEqualTo(UPDATED_NUMERO_TELEFONO);
         assertThat(testEmpleado.getTitulo()).isEqualTo(UPDATED_TITULO);
         assertThat(testEmpleado.getFechaContratacion()).isEqualTo(UPDATED_FECHA_CONTRATACION);
+        assertThat(testEmpleado.getFoto()).isEqualTo(UPDATED_FOTO);
+        assertThat(testEmpleado.getFotoContentType()).isEqualTo(UPDATED_FOTO_CONTENT_TYPE);
     }
 
     @Test

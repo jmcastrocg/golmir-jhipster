@@ -32,6 +32,15 @@
                 <dd>
                     <span>{{ empleado.fechaContratacion }}</span>
                 </dd>
+                <dt><span jhiTranslate="golmirjhApp.empleado.foto">Foto</span></dt>
+                <dd>
+                    <div *ngIf="empleado.foto">
+                        <a (click)="openFile(empleado?.fotoContentType!, empleado?.foto)">
+                            <img [src]="'data:' + empleado.fotoContentType + ';base64,' + empleado.foto" style="max-width: 100%;" alt="empleado image"/>
+                        </a>
+                        {{ empleado.fotoContentType }}, {{ byteSize(empleado.foto) }}
+                    </div>
+                </dd>
                 <dt><span jhiTranslate="golmirjhApp.empleado.direccion">Direccion</span></dt>
                 <dd>
                     <div *ngIf="empleado.direccion">
