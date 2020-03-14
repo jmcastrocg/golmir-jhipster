@@ -18,6 +18,10 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "titulo",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "fechaContratacion",
             "fieldType": "Instant"
         }

@@ -33,6 +33,9 @@ public class Empleado implements Serializable {
     @Column(name = "numero_telefono")
     private String numeroTelefono;
 
+    @Column(name = "titulo")
+    private String titulo;
+
     @Column(name = "fecha_contratacion")
     private Instant fechaContratacion;
 
@@ -101,6 +104,19 @@ public class Empleado implements Serializable {
         this.numeroTelefono = numeroTelefono;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public Empleado titulo(String titulo) {
+        this.titulo = titulo;
+        return this;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
     public Instant getFechaContratacion() {
         return fechaContratacion;
     }
@@ -152,6 +168,7 @@ public class Empleado implements Serializable {
             ", apellido='" + getApellido() + "'" +
             ", email='" + getEmail() + "'" +
             ", numeroTelefono='" + getNumeroTelefono() + "'" +
+            ", titulo='" + getTitulo() + "'" +
             ", fechaContratacion='" + getFechaContratacion() + "'" +
             "}";
     }
