@@ -16,6 +16,7 @@ entity Empleado {
 	apellido String,
 	email String,
 	numeroTelefono String,
+    titulo String,
 	fechaContratacion Instant,
 }
 
