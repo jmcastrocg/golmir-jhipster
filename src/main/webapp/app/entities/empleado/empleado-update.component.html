@@ -1,0 +1,65 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-empleado-heading" jhiTranslate="golmirjhApp.empleado.home.createOrEditLabel">Create or edit a Empleado</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="golmirjhApp.empleado.nombre" for="field_nombre">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" id="field_nombre"
+                           formControlName="nombre"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="golmirjhApp.empleado.apellido" for="field_apellido">Apellido</label>
+                    <input type="text" class="form-control" name="apellido" id="field_apellido"
+                           formControlName="apellido"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="golmirjhApp.empleado.email" for="field_email">Email</label>
+                    <input type="text" class="form-control" name="email" id="field_email"
+                           formControlName="email"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="golmirjhApp.empleado.numeroTelefono" for="field_numeroTelefono">Numero Telefono</label>
+                    <input type="text" class="form-control" name="numeroTelefono" id="field_numeroTelefono"
+                           formControlName="numeroTelefono"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="golmirjhApp.empleado.fechaContratacion" for="field_fechaContratacion">Fecha Contratacion</label>
+                    <div class="d-flex">
+                        <input id="field_fechaContratacion" type="datetime-local" class="form-control" name="fechaContratacion" formControlName="fechaContratacion" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="golmirjhApp.empleado.direccion" for="field_direccion">Direccion</label>
+                    <select class="form-control" id="field_direccion" name="direccion" formControlName="direccion">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="direccionOption.id === editForm.get('direccion')!.value?.id ? editForm.get('direccion')!.value : direccionOption" *ngFor="let direccionOption of direccions; trackBy: trackById">{{ direccionOption.id }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
