@@ -1,0 +1,42 @@
+// an ignored comment
+/** not an ignored comment */
+entity Direccion {
+	calle String,
+	codigoPostal String,
+	ciudad String,
+	provincia String
+}
+
+entity Departamento {
+	nombreDepartamento String required
+}
+
+entity Empleado {
+	nombre String,
+	apellido String,
+	email String,
+	numeroTelefono String,
+	fechaContratacion Instant,
+}
+
+relationship OneToOne {
+	Direccion{departamento} to Departamento
+}
+relationship OneToOne {
+	Empleado{direccion} to Direccion
+}
+
+
+
+// Set pagination options
+paginate Empleado with infinite-scroll
+paginate Departamento with pagination
+
+// Use Data Transfert Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
